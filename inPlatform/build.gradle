@@ -1,0 +1,39 @@
+allprojects {
+    repositories { mavenCentral() }
+}
+
+// gets strong constraint from platform, but overrides
+project(':appWithOverride') {
+    apply plugin: 'java-library'
+    dependencies {
+        api("com.fasterxml.jackson.core:jackson-databind")
+        api(platform(project(':platform'))) { assimilate() }
+        constraints {
+            // overrider platform decision
+            api("com.fasterxml.jackson.core:jackson-core:2.8.8") {
+                version { strong() }
+            }
+        }
+    }
+}
+
+// gets strong constraint from platform
+project(':app') {
+    apply plugin: 'java-library'
+    dependencies {
+        api(platform(project(':platform'))) { assimilate() }
+        api("com.fasterxml.jackson.core:jackson-databind")
+    }
+}
+
+project(':platform') {
+    apply plugin: 'java-platform'
+    dependencies {
+        constraints {
+            api("com.fasterxml.jackson.core:jackson-databind:2.8.9")
+            api("com.fasterxml.jackson.core:jackson-core:2.8.0") {
+                version { strong() }
+            }
+        }
+    }
+}
