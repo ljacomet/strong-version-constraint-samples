@@ -7,11 +7,11 @@ project(':appWithOverride') {
     apply plugin: 'java-library'
     dependencies {
         api("com.fasterxml.jackson.core:jackson-databind")
-        api(platform(project(':platform'))) { assimilate() }
+        api(platform(project(':platform'))) { inheritSubgraphConstraints() }
         constraints {
             // overrider platform decision
             api("com.fasterxml.jackson.core:jackson-core:2.8.8") {
-                version { strong() }
+                version { forSubgraph() }
             }
         }
     }
@@ -21,7 +21,7 @@ project(':appWithOverride') {
 project(':app') {
     apply plugin: 'java-library'
     dependencies {
-        api(platform(project(':platform'))) { assimilate() }
+        api(platform(project(':platform'))) { inheritSubgraphConstraints() }
         api("com.fasterxml.jackson.core:jackson-databind")
     }
 }
@@ -32,7 +32,7 @@ project(':platform') {
         constraints {
             api("com.fasterxml.jackson.core:jackson-databind:2.8.9")
             api("com.fasterxml.jackson.core:jackson-core:2.8.0") {
-                version { strong() }
+                version { forSubgraph() }
             }
         }
     }

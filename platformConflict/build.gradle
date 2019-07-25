@@ -6,9 +6,9 @@ project(':app') {
     apply plugin: 'java-library'
     dependencies {
         api(platform('org.springframework.boot:spring-boot-dependencies:2.1.6.RELEASE')) {
-            // STRICT VERSION CONFLICT - platform assimilate() down the graph with other platform version
+            // STRICT VERSION CONFLICT - platform inheritSubgraphConstraints() down the graph with other platform version
             // Solve by downgrading or with:
-            // version { strong() }
+            // version { forSubgraph() }
         }
         api("com.fasterxml.jackson.core:jackson-databind")
         api(project(':lib'))
@@ -19,7 +19,7 @@ project(':lib') {
     apply plugin: 'java-library'
     dependencies {
         api(platform('org.springframework.boot:spring-boot-dependencies:2.1.0.RELEASE')) {
-            assimilate()
+            inheritSubgraphConstraints()
         }
         api("com.fasterxml.jackson.core:jackson-core")
     }

@@ -1,0 +1,40 @@
+allprojects {
+    repositories { mavenCentral() }
+}
+
+project(':app') {
+    apply plugin: 'java-library'
+    dependencies {
+        api(project(':lib1'))
+        api(project(':lib2'))
+        constraints {
+            api("com.fasterxml.jackson.core:jackson-core:2.8.0") {
+                //version { forSubgraph() }
+            }
+        }
+    }
+}
+
+project(':lib2') {
+    apply plugin: 'java-library'
+    dependencies {
+        api("com.fasterxml.jackson.core:jackson-databind:2.8.9")
+        constraints {
+            api("com.fasterxml.jackson.core:jackson-core:2.8.0") {
+                version { forSubgraph() }
+            }
+        }
+    }
+}
+
+project(':lib1') {
+    apply plugin: 'java-library'
+    dependencies {
+        api("com.fasterxml.jackson.core:jackson-databind:2.8.9")
+        constraints {
+            api("com.fasterxml.jackson.core:jackson-core:2.8.1") {
+                version { forSubgraph() }
+            }
+        }
+    }
+}

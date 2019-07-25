@@ -6,7 +6,7 @@ allprojects {
 project(':a') {
     dependencies {
         api('com.google.guava:guava:15.0') {
-    	    version { strong() }
+    	    version { forSubgraph() }
         }
     }
 }
@@ -15,7 +15,7 @@ project(':b') {
     dependencies {
         constraints {
             api('com.google.guava:guava:13.0') {
-                version { strong() }
+                version { forSubgraph() }
             }
         }
         api(project(':a'))
@@ -26,14 +26,14 @@ project(':c') {
     dependencies {
         constraints {
             api('com.google.guava:guava:12.0') {
-                version { strong() }
+                version { forSubgraph() }
             }
         }
         api(project(':b'))
     }
 }
 
-project(':d') {
+project(':app') {
     dependencies {
         api(project(":c"))
     }
